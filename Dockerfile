@@ -1,4 +1,5 @@
-FROM node:16
+#build stage
+FROM node:19-alpine as BUILD_IMAGE
 
 WORKDIR /usr/src/app
 
@@ -6,12 +7,23 @@ COPY ./*.json ./
 
 RUN npm install
 
-COPY ./*.ts ./ 
+#copy tất cả trừ những thứ được liệt kê ở .dockerignore
+COPY . . 
 
-COPY  ./*.js ./
+RUN npm run build
 
-COPY . .
+#production stage
+FROM node:19-alpine as PRODUCTION
+
+WORKDIR /usr/src/app
+
+COPY --from=BUILD_IMAGE ./usr/src/app/package*.json ./
+COPY --from=BUILD_IMAGE ./usr/src/app/.next ./.next
+COPY --from=BUILD_IMAGE ./usr/src/app/public ./public
+COPY --from=BUILD_IMAGE ./usr/src/app/node_modules ./node_modules
+
+ENV NODE_ENV=Production
 
 EXPOSE 3000
 
-CMD ["npm", "run", "dev"]
+CMD ["npm", "start"]
