@@ -37,6 +37,10 @@ const nextConfig = {
     //     ]
     // },
     // trailingSlash: true,
+
+    // it will create a folder at “.next/standalone” which can then be deployed on its own without installing “node_modules”. 
+    // It is also one of the most effective methods for optimizing the docker file
+    output: 'standalone'
 }
 
 module.exports = nextConfig

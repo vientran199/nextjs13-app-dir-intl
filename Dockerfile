@@ -3,7 +3,7 @@ FROM node:19-alpine as BUILD_IMAGE
 
 WORKDIR /usr/src/app
 
-COPY ./*.json ./
+COPY ./package*.json ./
 
 RUN npm install
 
@@ -12,18 +12,20 @@ COPY . .
 
 RUN npm run build
 
+
 #production stage
 FROM node:19-alpine as PRODUCTION
 
 WORKDIR /usr/src/app
 
 COPY --from=BUILD_IMAGE ./usr/src/app/package*.json ./
-COPY --from=BUILD_IMAGE ./usr/src/app/.next ./.next
+COPY --from=BUILD_IMAGE ./usr/src/app/next.config.js ./
 COPY --from=BUILD_IMAGE ./usr/src/app/public ./public
-COPY --from=BUILD_IMAGE ./usr/src/app/node_modules ./node_modules
+COPY --from=BUILD_IMAGE ./usr/src/app/.next/standalone  ./
+COPY --from=BUILD_IMAGE ./usr/src/app/.next/static  ./.next/static
 
 ENV NODE_ENV=Production
 
 EXPOSE 3000
 
-CMD ["npm", "start"]
+CMD ["npm","start"]
