@@ -1,0 +1,13 @@
+version: '3'
+
+services: 
+  next13: 
+    image: vientran1999/next13-intl-prod
+
+    ports: 
+        - 3001:3000
+
+# volumes:
+# networks:
+# secrets:
+# configs:

@@ -19,13 +19,12 @@ FROM node:19-alpine as PRODUCTION
 WORKDIR /usr/src/app
 
 COPY --from=BUILD_IMAGE ./usr/src/app/package*.json ./
-COPY --from=BUILD_IMAGE ./usr/src/app/next.config.js ./
+COPY --from=BUILD_IMAGE ./usr/src/app/.next ./.next
 COPY --from=BUILD_IMAGE ./usr/src/app/public ./public
-COPY --from=BUILD_IMAGE ./usr/src/app/.next/standalone  ./
-COPY --from=BUILD_IMAGE ./usr/src/app/.next/static  ./.next/static
+COPY --from=BUILD_IMAGE ./usr/src/app/node_modules ./node_modules
 
 ENV NODE_ENV=Production
 
 EXPOSE 3000
 
-CMD ["npm","start"]
+CMD ["npm", "start"]
