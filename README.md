@@ -34,3 +34,36 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+
+## Build and Run with standalone
+
+- Config: standalone output
+
+```bash
+const nextConfig = {
+    output: 'standalone'
+}
+module.exports = nextConfig
+```
+
+- Run build command
+
+```bash
+npm run build
+```
+
+- Create new folder `deployment` out of project
+- Copy `.next/standalone` to `/development/`, `public` to `/development/`
+- In folder `/development`, run command
+
+```bash
+npm install next
+```
+
+- Run
+
+```bash
+npm start
+```
+
+Or follow by link [Create standalone build for your Next JS app](https://tech.competa.com/standalone-deployment-of-nextjs-3286490cb39b)
